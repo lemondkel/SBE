@@ -16,15 +16,6 @@
 		<url-pattern>*</url-pattern>
 	</filter-mapping>
 
-	<filter>
-		<filter-name>ResponseHeaderFilter</filter-name>
-		<filter-class>com.avlesh.web.filter.responseheaderfilter.ResponseHeaderFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>ResponseHeaderFilter</filter-name>
-		<url-pattern>*</url-pattern>
-	</filter-mapping>
-
 	<!-- All JSP page encoding setting -->
 	<jsp-config>
 		<jsp-property-group>
