@@ -1,0 +1,52 @@
+header {
+	display: inline-block;
+	width: 100%;
+	border: 1px solid #666;
+	line-height: 80px;
+	text-align: center;
+	font-size: 30px;
+	box-sizing: border-box;
+}
+
+nav, article {
+	float: left;
+	display: inline-block;
+}
+
+nav {
+	width: 20%;
+	height: 400px;
+	overflow-y: auto;
+	border-right: 1px dotted #666;
+	box-sizing: border-box;
+}
+
+nav ul li {
+	line-height: 35px;
+}
+
+nav ul li a {
+	color: black;
+	text-decoration: none;
+}
+
+nav ul li a:hover {
+	color: rgb(91, 155, 213);
+	text-decoration: underline;
+}
+
+article {
+	width: 80%;
+	height: 400px;
+	overflow-y: auto;
+}
+
+footer {
+	display: inline-block;
+	width: 100%;
+	border: 1px solid #666;
+	line-height: 80px;
+	text-align: center;
+	font-size: 30px;
+	box-sizing: border-box;
+}
