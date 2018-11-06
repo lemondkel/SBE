@@ -6,9 +6,24 @@
  * @returns
  */
 function userLogin() {
-	var userId = document.getElementById("userId").value;
-	var userPassword = document.getElementById("userPassword").value;
-	var params = 'user_id=' + userId + '&user_password=' + userPassword
+	var userId = document.getElementById("userId");
+
+	if (userId.value === "") {
+		alert("값을 입력해주세요.");
+		userId.focus();
+		return false;
+	}
+
+	var userPassword = document.getElementById("userPassword");
+
+	if (userPassword.value === "") {
+		alert("값을 입력해주세요.");
+		userPassword.focus();
+		return false;
+	}
+
+	var params = 'user_id=' + userId.value + '&user_password='
+			+ userPassword.value
 	var request = new XMLHttpRequest();
 	request.open('POST', getContextPath() + '/user/process/login', true);
 	request.setRequestHeader('Content-Type',
@@ -17,16 +32,22 @@ function userLogin() {
 	request.onload = function() {
 		if (request.status >= 200 && request.status < 400) {
 			// Success!
-			var resp = request.responseText;
-			console.log(resp);
+			var data = JSON.parse(request.responseText);
+			console.log(data);
+			if (data.result) {
+				// 통신 결과가 올바를 때
+				window.location.href = getContextPath() + '/';
+			} else {
+				// 에러가 있을 때
+				alert(data);
+			}
 		} else {
-			// We reached our target server, but it returned an error
-
+			alert("Server Error!");
 		}
 	};
 
 	request.onerror = function() {
-		// There was a connection error of some sort
+		alert("Server Error!");
 	};
 
 	request.send(params);
