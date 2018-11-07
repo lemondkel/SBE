@@ -41,7 +41,7 @@ function userLogin() {
 				window.location.href = getContextPath() + '/';
 			} else {
 				// 에러가 있을 때
-				alert(data);
+				alert(data.desc);
 			}
 		} else {
 			alert("Server Error!");

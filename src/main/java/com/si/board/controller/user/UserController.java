@@ -53,7 +53,7 @@ public class UserController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/process/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/process/login", produces = "application/json", consumes = "application/json", method = RequestMethod.POST)
 	public Map<String, Object> userLogin(@RequestBody UserVo userVo, HttpSession session) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
@@ -121,10 +121,11 @@ public class UserController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/process/join", produces = "application/json", method = RequestMethod.POST)
+	@RequestMapping(value = "/process/join", produces = "application/json", consumes = "application/json", method = RequestMethod.POST)
 	public Map<String, Object> userJoinPage(@RequestBody UserVo userVo) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
+			userVo.setUserPassword(bCryptPasswordEncoder.encode(userVo.getUserPassword()));
 			if (userService.insertUser(userVo) == 1) {
 				resultMap.put("desc", "회원가입에 성공하였습니다.");
 				resultMap.put("code", 200);
