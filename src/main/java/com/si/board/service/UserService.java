@@ -3,6 +3,8 @@ package com.si.board.service;
 import java.util.List;
 import java.util.Map;
 
+import com.si.board.vo.UserVo;
+
 public interface UserService {
 
 	/**
@@ -10,10 +12,10 @@ public interface UserService {
 	 * 
 	 * @author l2jong
 	 * @since 2018-11-06
-	 * @param map
+	 * @param userVo
 	 * @return
 	 */
-	int insertUser(Map<String, Object> map);
+	int insertUser(UserVo userVo);
 
 	/**
 	 * 사용자 삭제

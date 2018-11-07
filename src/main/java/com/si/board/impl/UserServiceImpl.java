@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.si.board.dao.UserDao;
 import com.si.board.service.UserService;
+import com.si.board.vo.UserVo;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,8 +25,8 @@ public class UserServiceImpl implements UserService {
 	 * @return
 	 */
 	@Override
-	public int insertUser(Map<String, Object> map) {
-		return userDao.insertUser(map);
+	public int insertUser(UserVo userVo) {
+		return userDao.insertUser(userVo);
 	}
 
 	/**

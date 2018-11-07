@@ -9,6 +9,7 @@
 		<typeAlias alias="map" type="java.util.Map" />
 		<typeAlias alias="date" type="java.util.Date" />
 		<typeAlias alias="boolean" type="java.lang.Boolean" />
+		<typeAlias alias="User" type="com.si.board.vo.UserVo" />
 	</typeAliases>
 
 	<mappers>

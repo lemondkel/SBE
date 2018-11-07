@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.si.board.vo.UserVo;
+
 @Repository
 public class UserDao {
 
@@ -20,12 +22,12 @@ public class UserDao {
 	 * 
 	 * @author l2jong
 	 * @since 2018-11-06
-	 * @param map
+	 * @param userVo
 	 * @return
 	 */
-	public int insertUser(Map<String, Object> map) {
+	public int insertUser(UserVo userVo) {
 		// TODO Auto-generated method stub
-		return session.insert("UserMapper.insertUser", map);
+		return session.insert("UserMapper.insertUser", userVo);
 	}
 
 	/**

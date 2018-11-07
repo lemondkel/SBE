@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.si.board.service.UserService;
+import com.si.board.vo.UserVo;
 
 /**
  * 회원에 관련된 컨트롤러
@@ -122,28 +123,16 @@ public class UserController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/process/join", method = RequestMethod.POST)
-	public Map<String, Object> userJoinPage(@RequestParam("user_id") String userId,
-			@RequestParam("user_password") String userPassword, @RequestParam("user_name") String userName,
-			@RequestParam("user_birth_day") String userBirthDay, @RequestParam("user_gender") char userGender,
-			@RequestParam("user_contact") String userContact, @RequestParam("user_email") String userEmail,
-			@RequestParam("user_zip_code") String userZipCode, @RequestParam("user_address1") String userAddress1,
-			@RequestParam("user_address2") String userAddress2) {
+	public Map<String, Object> userJoinPage(UserVo userVo, @RequestParam("user_id") String userId,
+			@RequestParam("user_password") String userPassword, @RequestParam("user_name") String userName) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		Map<String, Object> map = new HashMap<String, Object>();
 
 		try {
-			map.put("userId", userId);
-			map.put("userPassword", bCryptPasswordEncoder.encode(userPassword));
-			map.put("userName", userName);
-			map.put("userBirthDay", userBirthDay);
-			map.put("userGender", userGender);
-			map.put("userContact", userContact);
-			map.put("userEmail", userEmail);
-			map.put("userZipCode", userZipCode);
-			map.put("userAddress1", userAddress1);
-			map.put("userAddress2", userAddress2);
+			userVo.setUserId(userId);
+			userVo.setUserPassword(bCryptPasswordEncoder.encode(userPassword));
+			userVo.setUserName(userName);
 
-			if (userService.insertUser(map) == 1) {
+			if (userService.insertUser(userVo) == 1) {
 				resultMap.put("desc", "회원가입에 성공하였습니다.");
 				resultMap.put("code", 200);
 				resultMap.put("result", true);
@@ -162,8 +151,6 @@ public class UserController {
 			resultMap.put("code", 900);
 			resultMap.put("result", false);
 		}
-
 		return resultMap;
 	}
-
 }
