@@ -8,9 +8,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.si.board.service.UserService;
@@ -54,16 +54,15 @@ public class UserController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/process/login", method = RequestMethod.POST)
-	public Map<String, Object> userLogin(@RequestParam("user_id") String userId,
-			@RequestParam("user_password") String userPassword, HttpSession session) {
+	public Map<String, Object> userLogin(@RequestBody UserVo userVo, HttpSession session) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
-			String encodedPassword = userService.getUserEncodedPassword(userId);
-			if (userService.isExistUser(userId) == true) {
+			String encodedPassword = userService.getUserEncodedPassword(userVo.getUserId());
+			if (userService.isExistUser(userVo.getUserId()) == true) {
 				// 아이디가 존재할 경우
-				if (bCryptPasswordEncoder.matches(userPassword, encodedPassword) == true) {
+				if (bCryptPasswordEncoder.matches(userVo.getUserPassword(), encodedPassword) == true) {
 					// 비밀번호가 일치할 경우
-					session.setAttribute("login_user_id", userId);
+					session.setAttribute("login_user_id", userVo.getUserId());
 					resultMap.put("desc", "로그인에 성공하였습니다.");
 					resultMap.put("code", 200);
 					resultMap.put("result", true);
@@ -122,16 +121,10 @@ public class UserController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/process/join", method = RequestMethod.POST)
-	public Map<String, Object> userJoinPage(UserVo userVo, @RequestParam("user_id") String userId,
-			@RequestParam("user_password") String userPassword, @RequestParam("user_name") String userName) {
+	@RequestMapping(value = "/process/join", produces = "application/json", method = RequestMethod.POST)
+	public Map<String, Object> userJoinPage(@RequestBody UserVo userVo) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-
 		try {
-			userVo.setUserId(userId);
-			userVo.setUserPassword(bCryptPasswordEncoder.encode(userPassword));
-			userVo.setUserName(userName);
-
 			if (userService.insertUser(userVo) == 1) {
 				resultMap.put("desc", "회원가입에 성공하였습니다.");
 				resultMap.put("code", 200);

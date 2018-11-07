@@ -22,12 +22,14 @@ function userLogin() {
 		return false;
 	}
 
-	var params = 'user_id=' + userId.value + '&user_password='
-			+ userPassword.value
+	var parameterData = {
+		userId : userId.value,
+		userPassword : userPassword.value
+	};
+
 	var request = new XMLHttpRequest();
 	request.open('POST', getContextPath() + '/user/process/login', true);
-	request.setRequestHeader('Content-Type',
-			'application/x-www-form-urlencoded; charset=UTF-8');
+	request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 
 	request.onload = function() {
 		if (request.status >= 200 && request.status < 400) {
@@ -50,5 +52,5 @@ function userLogin() {
 		alert("Server Error!");
 	};
 
-	request.send(params);
+	request.send(JSON.stringify(parameterData));
 }

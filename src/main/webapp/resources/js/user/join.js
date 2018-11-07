@@ -1,33 +1,3 @@
-documentReady(documentReadyFunc);
-
-/**
- * 페이지가 준비됬을 경우 동작하는 함수
- * 
- * @author l2jong
- * @since 2018-11-06
- * @returns
- */
-function documentReadyFunc() {
-	var userEmailSelect = document.getElementById("userEmailSelect");
-	userEmailSelect.addEventListener('change', function(e) {
-		var emailVal = e.target.value;
-		var userEmail2 = document.getElementById('userEmail2');
-		if (emailVal === "") {
-			// 직접 입력의 경우
-			if (userEmail2.disabled !== false) {
-				userEmail2.disabled = false;
-			}
-			userEmail2.value = "";
-			userEmail2.focus();
-		} else {
-			if (userEmail2.disabled !== true) {
-				userEmail2.disabled = true;
-			}
-			userEmail2.value = emailVal;
-		}
-	})
-}
-
 /**
  * 회원가입을 처리합니다.
  * 
@@ -74,14 +44,17 @@ function joinUser() {
 		userName.focus();
 		return false;
 	}
-
-	var params = 'user_id=' + userId.value + '&user_password='
-			+ userPassword.value + '&user_name=' + userName.value;
+	
+	var parameterData = {
+		userId : userId.value,
+		userPassword : userPassword.value,
+		userName : userName.value
+	};
 
 	var request = new XMLHttpRequest();
 	request.open('POST', getContextPath() + '/user/process/join', true);
 	request.setRequestHeader('Content-Type',
-			'application/x-www-form-urlencoded; charset=UTF-8');
+			'application/json; charset=UTF-8');
 
 	request.onload = function() {
 		if (request.status >= 200 && request.status < 400) {
@@ -101,5 +74,5 @@ function joinUser() {
 		alert("Server Error!");
 	};
 
-	request.send(params);
+	request.send(JSON.stringify(parameterData));
 }
