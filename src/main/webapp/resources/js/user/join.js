@@ -164,14 +164,3 @@ function joinUser() {
 
 	request.send(params);
 }
-
-/**
- * 주소를 검색합니다.
- * 
- * @author l2jong
- * @since 2018-11-06
- * @returns
- */
-function searchAddr() {
-
-}

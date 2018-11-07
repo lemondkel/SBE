@@ -1,4 +1,4 @@
-package com.si.board.controller;
+package com.si.board.controller.main;
 
 import javax.servlet.http.HttpSession;
 
@@ -27,9 +27,7 @@ public class MainController {
 	 * @return
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String mainPage(Model model, HttpSession session) {
-
+	public String mainPage() {
 		return "main";
 	}
-
 }

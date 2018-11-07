@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 
 <table>
@@ -85,8 +84,7 @@
 			<label for="userZipCode">우편번호</label>
 		</td>
 		<td>
-			<input id="userZipCode" type='text' disabled />
-			<button type="button" onclick="searchAddr()">검색</button>
+			<input id="userZipCode" type='text' />
 		</td>
 	</tr>
 	<tr>
@@ -94,7 +92,7 @@
 			<label for="userAddress1">주소</label>
 		</td>
 		<td>
-			<input id="userAddress1" type='text' disabled />
+			<input id="userAddress1" type='text' />
 		</td>
 	</tr>
 	<tr>
