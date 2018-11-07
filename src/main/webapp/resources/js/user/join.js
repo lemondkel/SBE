@@ -44,7 +44,7 @@ function joinUser() {
 		userName.focus();
 		return false;
 	}
-	
+
 	var parameterData = {
 		userId : userId.value,
 		userPassword : userPassword.value,
@@ -53,8 +53,7 @@ function joinUser() {
 
 	var request = new XMLHttpRequest();
 	request.open('POST', getContextPath() + '/user/process/join', true);
-	request.setRequestHeader('Content-Type',
-			'application/json; charset=UTF-8');
+	request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 
 	request.onload = function() {
 		if (request.status >= 200 && request.status < 400) {
