@@ -1,4 +1,4 @@
-package com.si.board.controller.user;
+package com.si.board.controller;
 
 import java.util.HashMap;
 import java.util.List;

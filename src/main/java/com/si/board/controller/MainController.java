@@ -1,4 +1,4 @@
-package com.si.board.controller.main;
+package com.si.board.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
