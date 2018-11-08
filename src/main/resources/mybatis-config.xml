@@ -10,6 +10,9 @@
 		<typeAlias alias="date" type="java.util.Date" />
 		<typeAlias alias="boolean" type="java.lang.Boolean" />
 		<typeAlias alias="User" type="com.si.board.vo.UserVo" />
+		<typeAlias alias="Board" type="com.si.board.vo.BoardVo" />
+		<typeAlias alias="Category" type="com.si.board.vo.CategoryVo" />
+		<typeAlias alias="Post" type="com.si.board.vo.PostVo" />
 	</typeAliases>
 
 	<mappers>

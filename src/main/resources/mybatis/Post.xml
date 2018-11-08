@@ -2,5 +2,53 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="PostMapper">
+	<select id="getPostByBoard" resultType="Post"
+		parameterType="int">
+		<![CDATA[
+			SELECT
+				A.`SBE_POS_SEQ` AS postSeq, A.`SBE_POS_TITLE` AS postTitle, 
+				A.`SBE_POS_VIEW_COUNT` AS postViewCount, C.`SBE_USR_NAME` AS postRegUserName,
+				DATE_FORMAT(A.`SBE_POS_REG_DATE`, '%Y-%m-%d') AS postRegDate,
+				B.`SBE_CTG_NAME` AS postCategoryName
+			FROM
+				`SBE_POS` A
+				INNER JOIN `SBE_CTG` B ON A.`SBE_CTG_SEQ` = B.`SBE_CTG_SEQ`
+				INNER JOIN `SBE_USR` C ON A.`SBE_POS_REG_USR_ID` = C.`SBE_USR_ID`
+			WHERE
+				B.`SBE_BOD_SEQ` = #{boardSeq}
+		]]>
+	</select>
 
+	<select id="getPostByCategory" resultType="Post"
+		parameterType="int">
+		<![CDATA[
+			SELECT
+				A.`SBE_POS_SEQ` AS postSeq, A.`SBE_POS_TITLE` AS postTitle, 
+				A.`SBE_POS_VIEW_COUNT` AS postViewCount, C.`SBE_USR_NAME` AS postRegUserName,
+				DATE_FORMAT(A.`SBE_POS_REG_DATE`, '%Y-%m-%d') AS postRegDate,
+				B.`SBE_CTG_NAME` AS postCategoryName
+			FROM
+				`SBE_POS` A
+				INNER JOIN `SBE_CTG` B ON A.`SBE_CTG_SEQ` = B.`SBE_CTG_SEQ`
+				INNER JOIN `SBE_USR` C ON A.`SBE_POS_REG_USR_ID` = C.`SBE_USR_ID`
+			WHERE
+				B.`SBE_CTG_SEQ` = #{categorySeq}
+		]]>
+	</select>
+
+	<insert id="insertPost" parameterType="Post">
+		<![CDATA[
+			INSERT INTO
+			`SBE_POS`
+			(
+				`SBE_CTG_SEQ`, `SBE_POS_TITLE`, `SBE_POS_CONTENTS`,
+				`SBE_POS_REG_USR_ID`
+			)
+			VALUES
+			(
+				#{categorySeq}, #{postTitle}, #{postContents},
+				#{postRegUserId}
+			)
+		]]>
+	</insert>
 </mapper>

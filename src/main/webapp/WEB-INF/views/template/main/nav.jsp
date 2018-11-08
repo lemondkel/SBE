@@ -5,9 +5,11 @@
 
 <ul>
 	<c:if test="${login_user_id != null}">
-		<li>
-			<a href="${pageContext.request.contextPath}/">A게시판</a>
-		</li>
+		<c:forEach items="${boardList}" var="item">
+			<li>
+				<a href="${pageContext.request.contextPath}/board/${item.boardSeq}/0/1">${item.boardName}</a>
+			</li>
+		</c:forEach>
 		<li>
 			<a href="javascript:logout()">로그아웃</a>
 		</li>

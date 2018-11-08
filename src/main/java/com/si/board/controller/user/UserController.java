@@ -1,6 +1,7 @@
 package com.si.board.controller.user;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.si.board.service.BoardService;
 import com.si.board.service.UserService;
+import com.si.board.vo.BoardVo;
 import com.si.board.vo.UserVo;
 
 /**
@@ -26,8 +29,12 @@ import com.si.board.vo.UserVo;
 @RequestMapping("/user")
 @Controller
 public class UserController {
+
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private BoardService boardService;
 
 	private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -63,6 +70,8 @@ public class UserController {
 				if (bCryptPasswordEncoder.matches(userVo.getUserPassword(), encodedPassword) == true) {
 					// 비밀번호가 일치할 경우
 					session.setAttribute("login_user_id", userVo.getUserId());
+					List<BoardVo> boardList = boardService.getAllBoard();
+					session.setAttribute("boardList", boardList);
 					resultMap.put("desc", "로그인에 성공하였습니다.");
 					resultMap.put("code", 200);
 					resultMap.put("result", true);

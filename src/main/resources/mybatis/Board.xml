@@ -2,5 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="BoardMapper">
-
+	<select id="getAllBoard" resultType="Board">
+		<![CDATA[
+			SELECT
+				`SBE_BOD_SEQ` AS boardSeq, `SBE_BOD_NAME` AS boardName, `SBE_BOD_ORDER` AS boardOrder
+			FROM
+				`SBE_BOD`
+		]]>
+	</select>
+	
+	<select id="isExistBoard" resultType="boolean" parameterType="int">
+		<![CDATA[
+			SELECT
+				IF(COUNT(*)=1, true, false) AS isExistBoard
+			FROM
+				`SBE_BOD`
+			WHERE
+				`SBE_BOD_SEQ` = #{boardSeq}
+		]]>
+	</select>
 </mapper>
