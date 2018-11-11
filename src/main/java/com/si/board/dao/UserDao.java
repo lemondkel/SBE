@@ -1,29 +1,28 @@
 package com.si.board.dao;
 
-import java.util.List;
-import java.util.Map;
-
+import com.si.board.vo.UserVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import com.si.board.vo.UserVo;
-
 @Repository
 public class UserDao {
 
+	private final SqlSession session;
+
 	@Autowired
-	@Qualifier("sqlSessionTemplate")
-	private SqlSession session;
+	public UserDao(@Qualifier("sqlSessionTemplate") SqlSession session) {
+		this.session = session;
+	}
 
 	/**
 	 * 사용자 생성
-	 * 
+	 *
+	 * @param userVo 사용자 Vo
+	 * @return int
 	 * @author l2jong
 	 * @since 2018-11-06
-	 * @param userVo
-	 * @return
 	 */
 	public int insertUser(UserVo userVo) {
 		// TODO Auto-generated method stub
@@ -31,48 +30,12 @@ public class UserDao {
 	}
 
 	/**
-	 * 사용자 삭제
-	 * 
-	 * @author l2jong
-	 * @since 2018-11-06
-	 * @param map
-	 * @return
-	 */
-	public int deleteUser(Map<String, Object> map) {
-		return 0;
-	}
-
-	/**
-	 * 사용자 수정
-	 * 
-	 * @author l2jong
-	 * @since 2018-11-06
-	 * @param map
-	 * @return
-	 */
-	public int updateUser(Map<String, Object> map) {
-		return 0;
-	}
-
-	/**
-	 * 사용자 선택
-	 * 
-	 * @author l2jong
-	 * @since 2018-11-06
-	 * @param map
-	 * @return
-	 */
-	public List<Map<String, Object>> selectUser(Map<String, Object> map) {
-		return null;
-	}
-
-	/**
 	 * 사용자의 암호화된 비밀번호를 가져온다.
-	 * 
+	 *
+	 * @param userId 사용자 아이디
+	 * @return String 암호화된 비밀번호
 	 * @author l2jong
 	 * @since 2018-11-06
-	 * @param userId
-	 * @return
 	 */
 	public String getUserEncodedPassword(String userId) {
 		return session.selectOne("UserMapper.getUserEncodedPassword", userId);
@@ -80,14 +43,13 @@ public class UserDao {
 
 	/**
 	 * 해당 아이디를 가진 사용자가 있는지 없는지 검사합니다.
-	 * 
+	 *
+	 * @param userId 사용자 아이디
+	 * @return boolean
 	 * @author l2jong
 	 * @since 2018-11-06
-	 * @param userId
-	 * @return
 	 */
 	public boolean isExistUser(String userId) {
 		return session.selectOne("UserMapper.isExistUser", userId);
 	}
-
 }

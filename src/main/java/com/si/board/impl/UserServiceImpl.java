@@ -21,51 +21,12 @@ public class UserServiceImpl implements UserService {
 	 * 
 	 * @author l2jong
 	 * @since 2018-11-06
-	 * @param map
+	 * @param userVo
 	 * @return
 	 */
 	@Override
 	public int insertUser(UserVo userVo) {
 		return userDao.insertUser(userVo);
-	}
-
-	/**
-	 * 사용자 삭제
-	 * 
-	 * @author l2jong
-	 * @since 2018-11-06
-	 * @param map
-	 * @return
-	 */
-	@Override
-	public int deleteUser(Map<String, Object> map) {
-		return userDao.deleteUser(map);
-	}
-
-	/**
-	 * 사용자 수정
-	 * 
-	 * @author l2jong
-	 * @since 2018-11-06
-	 * @param map
-	 * @return
-	 */
-	@Override
-	public int updateUser(Map<String, Object> map) {
-		return userDao.updateUser(map);
-	}
-
-	/**
-	 * 사용자 선택
-	 * 
-	 * @author l2jong
-	 * @since 2018-11-06
-	 * @param map
-	 * @return
-	 */
-	@Override
-	public List<Map<String, Object>> selectUser(Map<String, Object> map) {
-		return userDao.selectUser(map);
 	}
 
 	/**

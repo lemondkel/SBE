@@ -1,15 +1,14 @@
 package com.si.board.impl;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.si.board.dao.PostDao;
 import com.si.board.service.PostService;
 import com.si.board.vo.PostVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -40,4 +39,17 @@ public class PostServiceImpl implements PostService {
 		return postDao.getPostByCategory(map);
 	}
 
+	@Override
+	public int deletePost(int postSeq) {
+		return postDao.deletePost(postSeq);
+	}
+
+	@Override
+	public boolean isCorrectlyWriter(int postSeq, String userId) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("postSeq", postSeq);
+		map.put("userId", userId);
+
+		return postDao.isCorrectlyWriter(map);
+	}
 }

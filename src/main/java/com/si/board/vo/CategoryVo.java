@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class CategoryVo {
 
-	private int categorySeq;
-	private String categoryName;
-	private int categoryOrder;
+	private int categorySeq; // 카테고리 시퀀스 번호
+	private String categoryName; // 카테고리 이름
+	private int categoryOrder; // 카테고리 순번
 
 	public int getCategorySeq() {
 		return categorySeq;

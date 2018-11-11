@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="PostMapper">
+
 	<select id="getPostByBoard" resultType="Post"
 		parameterType="int">
 		<![CDATA[
@@ -51,4 +52,26 @@
 			)
 		]]>
 	</insert>
+
+	<delete id="deletePost" parameterType="int">
+		<![CDATA[
+			DELETE FROM
+				`SBE_POS`
+			WHERE
+				`SBE_POS_SEQ` = #{postSeq}
+		]]>
+	</delete>
+
+	<select id="isCorrectlyWriter" parameterType="map" resultType="boolean">
+		<![CDATA[
+			SELECT
+				IF(COUNT(*)=1, true, false) AS isCorrectlyWriter
+			FROM
+				`SBE_POS`
+			WHERE
+				`SBE_POS_SEQ` = #{postSeq},
+				`SBE_POS_REG_USR_ID` = #{userId}
+		]]>
+	</select>
+
 </mapper>

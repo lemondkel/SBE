@@ -4,21 +4,22 @@
 <configuration>
 
 	<typeAliases>
-		<typeAlias alias="string" type="java.lang.String" />
-		<typeAlias alias="int" type="java.lang.Integer" />
-		<typeAlias alias="map" type="java.util.Map" />
-		<typeAlias alias="date" type="java.util.Date" />
-		<typeAlias alias="boolean" type="java.lang.Boolean" />
-		<typeAlias alias="User" type="com.si.board.vo.UserVo" />
-		<typeAlias alias="Board" type="com.si.board.vo.BoardVo" />
-		<typeAlias alias="Category" type="com.si.board.vo.CategoryVo" />
-		<typeAlias alias="Post" type="com.si.board.vo.PostVo" />
+		<typeAlias alias="string" type="java.lang.String"/>
+		<typeAlias alias="int" type="java.lang.Integer"/>
+		<typeAlias alias="map" type="java.util.Map"/>
+		<typeAlias alias="date" type="java.util.Date"/>
+		<typeAlias alias="boolean" type="java.lang.Boolean"/>
+
+		<typeAlias alias="User" type="com.si.board.vo.UserVo"/>
+		<typeAlias alias="Board" type="com.si.board.vo.BoardVo"/>
+		<typeAlias alias="Category" type="com.si.board.vo.CategoryVo"/>
+		<typeAlias alias="Post" type="com.si.board.vo.PostVo"/>
 	</typeAliases>
 
 	<mappers>
-		<mapper resource="mybatis/User.xml" />
-		<mapper resource="mybatis/Board.xml" />
-		<mapper resource="mybatis/Category.xml" />
-		<mapper resource="mybatis/Post.xml" />
+		<mapper resource="mybatis/User.xml"/>
+		<mapper resource="mybatis/Board.xml"/>
+		<mapper resource="mybatis/Category.xml"/>
+		<mapper resource="mybatis/Post.xml"/>
 	</mappers>
 </configuration>

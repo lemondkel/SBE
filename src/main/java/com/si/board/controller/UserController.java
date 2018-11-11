@@ -1,11 +1,9 @@
 package com.si.board.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-
+import com.si.board.service.BoardService;
+import com.si.board.service.UserService;
+import com.si.board.vo.BoardVo;
+import com.si.board.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -14,38 +12,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.si.board.service.BoardService;
-import com.si.board.service.UserService;
-import com.si.board.vo.BoardVo;
-import com.si.board.vo.UserVo;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 회원에 관련된 컨트롤러
- * 
+ *
  * @author l2jong
  * @since 2018-11-05
- *
  */
 @RequestMapping("/user")
 @Controller
 public class UserController {
 
-	@Autowired
-	private UserService userService;
+	private final UserService userService;
 
-	@Autowired
-	private BoardService boardService;
+	private final BoardService boardService;
 
 	private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
+	@Autowired
+	public UserController(UserService userService, BoardService boardService) {
+		this.userService = userService;
+		this.boardService = boardService;
+	}
+
 	/**
 	 * 회원가입 페이지입니다.
-	 * 
+	 *
+	 * @return View
 	 * @author l2jong
 	 * @since 2018-11-05
-	 * @param locale
-	 * @param model
-	 * @return
 	 */
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public String userJoinPage() {
@@ -54,20 +53,20 @@ public class UserController {
 
 	/**
 	 * 로그인을 처리합니다.
-	 * 
+	 *
+	 * @return Map
 	 * @author l2jong
 	 * @since 2018-11-05
-	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/process/login", produces = "application/json", consumes = "application/json", method = RequestMethod.POST)
 	public Map<String, Object> userLogin(@RequestBody UserVo userVo, HttpSession session) {
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+		Map<String, Object> resultMap = new HashMap<>();
 		try {
 			String encodedPassword = userService.getUserEncodedPassword(userVo.getUserId());
-			if (userService.isExistUser(userVo.getUserId()) == true) {
+			if (userService.isExistUser(userVo.getUserId())) {
 				// 아이디가 존재할 경우
-				if (bCryptPasswordEncoder.matches(userVo.getUserPassword(), encodedPassword) == true) {
+				if (bCryptPasswordEncoder.matches(userVo.getUserPassword(), encodedPassword)) {
 					// 비밀번호가 일치할 경우
 					session.setAttribute("login_user_id", userVo.getUserId());
 					List<BoardVo> boardList = boardService.getAllBoard();
@@ -99,15 +98,15 @@ public class UserController {
 
 	/**
 	 * 로그아웃을 처리합니다.
-	 * 
+	 *
+	 * @return Map
 	 * @author l2jong
 	 * @since 2018-11-05
-	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/process/logout", method = RequestMethod.POST)
 	public Map<String, Object> userLogout(HttpSession session) {
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+		Map<String, Object> resultMap = new HashMap<>();
 		try {
 			session.removeAttribute("login_user_id");
 			resultMap.put("desc", "로그아웃에 성공하였습니다.");
@@ -124,15 +123,15 @@ public class UserController {
 
 	/**
 	 * 회원가입 처리입니다.
-	 * 
+	 *
+	 * @return Map
 	 * @author l2jong
 	 * @since 2018-11-06
-	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/process/join", produces = "application/json", consumes = "application/json", method = RequestMethod.POST)
 	public Map<String, Object> userJoinPage(@RequestBody UserVo userVo) {
-		Map<String, Object> resultMap = new HashMap<String, Object>();
+		Map<String, Object> resultMap = new HashMap<>();
 		try {
 			userVo.setUserPassword(bCryptPasswordEncoder.encode(userVo.getUserPassword()));
 			if (userService.insertUser(userVo) == 1) {

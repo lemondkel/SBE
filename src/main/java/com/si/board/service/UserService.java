@@ -18,36 +18,6 @@ public interface UserService {
 	int insertUser(UserVo userVo);
 
 	/**
-	 * 사용자 삭제
-	 * 
-	 * @author l2jong
-	 * @since 2018-11-06
-	 * @param map
-	 * @return
-	 */
-	int deleteUser(Map<String, Object> map);
-
-	/**
-	 * 사용자 수정
-	 * 
-	 * @author l2jong
-	 * @since 2018-11-06
-	 * @param map
-	 * @return
-	 */
-	int updateUser(Map<String, Object> map);
-
-	/**
-	 * 사용자 선택
-	 * 
-	 * @author l2jong
-	 * @since 2018-11-06
-	 * @param map
-	 * @return
-	 */
-	List<Map<String, Object>> selectUser(Map<String, Object> map);
-
-	/**
 	 * 사용자의 암호화된 비밀번호를 가져온다.
 	 * 
 	 * @author l2jong

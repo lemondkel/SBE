@@ -1,38 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans
-	xmlns="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+		xmlns="http://www.springframework.org/schema/mvc"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:beans="http://www.springframework.org/schema/beans"
+		xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<!-- 데이터베이스 풀 설정 -->
 	<beans:bean id="dataSourceMySQL"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+				class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<beans:property name="driverClassName"
-			value="org.mariadb.jdbc.Driver" />
+						value="org.mariadb.jdbc.Driver"/>
 		<beans:property name="url"
-			value="jdbc:mariadb://172.16.2.148:3307/si_board" />
-		<beans:property name="username" value="root" />
-		<beans:property name="password" value="1234" />
+						value="jdbc:mariadb://127.0.0.1:3306/si_board"/>
+		<beans:property name="username" value="root"/>
+		<beans:property name="password" value="1234"/>
 	</beans:bean>
 
 	<beans:bean id="sqlSessionFactory"
-		class="org.mybatis.spring.SqlSessionFactoryBean">
-		<beans:property name="dataSource" ref="dataSourceMySQL" />
+				class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSourceMySQL"/>
 		<beans:property name="configLocation"
-			value="classpath:mybatis-config.xml" />
+						value="classpath:mybatis-config.xml"/>
 	</beans:bean>
 
 	<beans:bean id="sqlSessionTemplate"
-		class="org.mybatis.spring.SqlSessionTemplate">
-		<beans:constructor-arg ref="sqlSessionFactory" />
+				class="org.mybatis.spring.SqlSessionTemplate">
+		<beans:constructor-arg ref="sqlSessionFactory"/>
 	</beans:bean>
 
 	<beans:bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<beans:property name="dataSource" ref="dataSourceMySQL" />
+				class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<beans:property name="dataSource" ref="dataSourceMySQL"/>
 	</beans:bean>
 </beans:beans>

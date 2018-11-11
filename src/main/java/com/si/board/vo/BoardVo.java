@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class BoardVo {
 
-	private int boardSeq;
-	private String boardName;
-	private int boardOrder;
+	private int boardSeq; // 게시판 시퀀스 번호
+	private String boardName; // 게시판 이름
+	private int boardOrder; // 게시판 순번
 
 	public int getBoardSeq() {
 		return boardSeq;
