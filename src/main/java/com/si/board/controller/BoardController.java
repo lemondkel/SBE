@@ -167,7 +167,7 @@ public class BoardController {
 	 * @since 2018-11-11
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/process/delete", method = RequestMethod.PUT)
+	@RequestMapping(value = "/process/delete", method = RequestMethod.DELETE)
 	public Map<String, Object> deletePostProcess(@RequestParam("post_seq") int postSeq, HttpSession session) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 
