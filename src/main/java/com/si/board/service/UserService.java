@@ -1,8 +1,5 @@
 package com.si.board.service;
 
-import java.util.List;
-import java.util.Map;
-
 import com.si.board.vo.UserVo;
 
 public interface UserService {

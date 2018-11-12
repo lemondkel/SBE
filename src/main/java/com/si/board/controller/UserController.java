@@ -61,7 +61,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/process/login", produces = "application/json", consumes = "application/json", method = RequestMethod.POST)
 	public Map<String, Object> userLogin(@RequestBody UserVo userVo, HttpSession session) {
-		Map<String, Object> resultMap = new HashMap<>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			String encodedPassword = userService.getUserEncodedPassword(userVo.getUserId());
 			if (userService.isExistUser(userVo.getUserId())) {
@@ -106,7 +106,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/process/logout", method = RequestMethod.POST)
 	public Map<String, Object> userLogout(HttpSession session) {
-		Map<String, Object> resultMap = new HashMap<>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			session.removeAttribute("login_user_id");
 			resultMap.put("desc", "로그아웃에 성공하였습니다.");
@@ -131,7 +131,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value = "/process/join", produces = "application/json", consumes = "application/json", method = RequestMethod.POST)
 	public Map<String, Object> userJoinPage(@RequestBody UserVo userVo) {
-		Map<String, Object> resultMap = new HashMap<>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			userVo.setUserPassword(bCryptPasswordEncoder.encode(userVo.getUserPassword()));
 			if (userService.insertUser(userVo) == 1) {

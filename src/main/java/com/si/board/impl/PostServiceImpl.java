@@ -46,7 +46,7 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public boolean isCorrectlyWriter(int postSeq, String userId) {
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("postSeq", postSeq);
 		map.put("userId", userId);
 
