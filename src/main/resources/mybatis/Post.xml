@@ -74,4 +74,39 @@
 		]]>
 	</select>
 
+	<update id="viewPost" parameterType="int">
+		<![CDATA[
+			UPDATE
+				`SBE_POS`
+			SET
+				`SBE_POS_VIEW_COUNT` = `SBE_POS_VIEW_COUNT` + 1
+			WHERE
+				`SBE_POS_SEQ` = #{postSeq}
+		]]>
+	</update>
+
+	<select id="isExistPost" resultType="boolean" parameterType="int">
+		<![CDATA[
+			SELECT
+				IF(COUNT(*)=1, true, false) AS isExistPost
+			FROM
+				`SBE_POS`
+			WHERE
+				`SBE_POS_SEQ` = #{postSeq}
+		]]>
+	</select>
+
+	<select id="getPostDetail" resultType="Post" parameterType="int">
+		<![CDATA[
+			SELECT
+				A.`SBE_POS_TITLE` AS postTitle, A.`SBE_POS_CONTENTS` AS postContents,
+				A.`SBE_POS_REG_USR_ID` AS postRegUserId, A.`SBE_POS_VIEW_COUNT` AS postViewCount,
+				DATE_FORMAT(A.`SBE_POS_REG_DATE`, '%Y-%m-%d') AS postRegDate, B.`SBE_CTG_NAME` AS postCategoryName
+			FROM
+				`SBE_POS` A
+				INNER JOIN `SBE_CTG` B ON A.`SBE_CTG_SEQ` = B.`SBE_CTG_SEQ`
+			WHERE
+				`SBE_POS_SEQ` = #{postSeq}
+		]]>
+	</select>
 </mapper>

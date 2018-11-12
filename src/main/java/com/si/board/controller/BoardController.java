@@ -110,6 +110,34 @@ public class BoardController {
 	}
 
 	/**
+	 * 게시물 조회 페이지입니다.
+	 *
+	 * @param postSeq 게시물 시퀀스 번호
+	 * @param model   모델
+	 * @return ModelAndView
+	 * @author l2jong
+	 * @since 2018-11-08
+	 */
+	@RequestMapping(value = "/view/{postSeq}", method = RequestMethod.GET)
+	public String postViewPage(@PathVariable("postSeq") int postSeq, Model model, HttpSession session) {
+
+		if (session.getAttribute("login_user_id") == null) {
+			// 세션이 존재하지 않을 경우
+			return "redirect:/";
+		}
+
+		if (!postService.isExistPost(postSeq)) {
+			// 없는 게시판일 경우
+			return "redirect:/";
+		}
+		PostVo postDetail = postService.getPostDetail(postSeq);
+
+		model.addAttribute("postDetail", postDetail);
+		model.addAttribute("postSeq", postSeq);
+		return "board/view";
+	}
+
+	/**
 	 * 게시물 작성 비즈니스 로직
 	 *
 	 * @param postVo  게시물 VO

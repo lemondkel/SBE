@@ -52,4 +52,19 @@ public class PostServiceImpl implements PostService {
 
 		return postDao.isCorrectlyWriter(map);
 	}
+
+	@Override
+	public int viewPost(int postSeq) {
+		return postDao.viewPost(postSeq);
+	}
+
+	@Override
+	public boolean isExistPost(int postSeq) {
+		return postDao.isExistPost(postSeq);
+	}
+
+	@Override
+	public PostVo getPostDetail(int postSeq) {
+		return postDao.getPostDetail(postSeq);
+	}
 }

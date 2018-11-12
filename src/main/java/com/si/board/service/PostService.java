@@ -14,4 +14,10 @@ public interface PostService {
 	int deletePost(int postSeq);
 
 	boolean isCorrectlyWriter(int postSeq, String userId);
+
+	int viewPost(int postSeq);
+
+	boolean isExistPost(int postSeq);
+
+	PostVo getPostDetail(int postSeq);
 }
