@@ -14,6 +14,7 @@
 		<typeAlias alias="Board" type="com.si.board.vo.BoardVo"/>
 		<typeAlias alias="Category" type="com.si.board.vo.CategoryVo"/>
 		<typeAlias alias="Post" type="com.si.board.vo.PostVo"/>
+		<typeAlias alias="Comment" type="com.si.board.vo.CommentVo"/>
 	</typeAliases>
 
 	<mappers>
@@ -21,5 +22,6 @@
 		<mapper resource="mybatis/Board.xml"/>
 		<mapper resource="mybatis/Category.xml"/>
 		<mapper resource="mybatis/Post.xml"/>
+		<mapper resource="mybatis/Comment.xml"/>
 	</mappers>
 </configuration>

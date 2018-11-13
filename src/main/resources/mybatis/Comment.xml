@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CommentMapper">
+	<select id="getCommentByPost" resultType="Comment">
+		<![CDATA[
+			SELECT
+				`SBE_BOD_SEQ` AS boardSeq, `SBE_BOD_NAME` AS boardName, `SBE_BOD_ORDER` AS boardOrder
+			FROM
+				`SBE_BOD`
+		]]>
+	</select>
+</mapper>

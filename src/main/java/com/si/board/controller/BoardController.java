@@ -127,14 +127,17 @@ public class BoardController {
 		}
 
 		if (!postService.isExistPost(postSeq)) {
-			// 없는 게시판일 경우
+			// 존재하지 않는 게시물일 경우
 			return "redirect:/";
-		}
-		PostVo postDetail = postService.getPostDetail(postSeq);
+		} else {
+			// 존재하는 게시물일 경우
+			PostVo postDetail = postService.getPostDetail(postSeq);		
+			postService.viewPost(postSeq);
 
-		model.addAttribute("postDetail", postDetail);
-		model.addAttribute("postSeq", postSeq);
-		return "board/view";
+			model.addAttribute("postDetail", postDetail);
+			model.addAttribute("postSeq", postSeq);
+			return "board/view";			
+		}
 	}
 
 	/**
