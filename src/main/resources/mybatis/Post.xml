@@ -3,8 +3,21 @@
 
 <mapper namespace="PostMapper">
 
+	<select id="getPostByBoardSum" resultType="int" parameterType="int">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS getPostByBoardSum
+			FROM
+				`SBE_POS` A
+				INNER JOIN `SBE_CTG` B ON A.`SBE_CTG_SEQ` = B.`SBE_CTG_SEQ`
+				INNER JOIN `SBE_USR` C ON A.`SBE_POS_REG_USR_ID` = C.`SBE_USR_ID`
+			WHERE
+				B.`SBE_BOD_SEQ` = #{boardSeq}
+		]]>
+	</select>
+
 	<select id="getPostByBoard" resultType="Post"
-		parameterType="int">
+		parameterType="map">
 		<![CDATA[
 			SELECT
 				A.`SBE_POS_SEQ` AS postSeq, A.`SBE_POS_TITLE` AS postTitle, 
@@ -17,6 +30,8 @@
 				INNER JOIN `SBE_USR` C ON A.`SBE_POS_REG_USR_ID` = C.`SBE_USR_ID`
 			WHERE
 				B.`SBE_BOD_SEQ` = #{boardSeq}
+			ORDER BY `SBE_POS_SEQ` DESC
+			LIMIT #{page}, 10
 		]]>
 	</select>
 
@@ -28,6 +43,22 @@
 				A.`SBE_POS_VIEW_COUNT` AS postViewCount, C.`SBE_USR_NAME` AS postRegUserName,
 				DATE_FORMAT(A.`SBE_POS_REG_DATE`, '%Y-%m-%d') AS postRegDate,
 				B.`SBE_CTG_NAME` AS postCategoryName
+			FROM
+				`SBE_POS` A
+				INNER JOIN `SBE_CTG` B ON A.`SBE_CTG_SEQ` = B.`SBE_CTG_SEQ`
+				INNER JOIN `SBE_USR` C ON A.`SBE_POS_REG_USR_ID` = C.`SBE_USR_ID`
+			WHERE
+				B.`SBE_CTG_SEQ` = #{categorySeq}
+			ORDER BY `SBE_POS_SEQ` DESC
+			LIMIT #{page}, 10
+		]]>
+	</select>
+
+	<select id="getPostByCategorySum" resultType="int"
+		parameterType="int">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS getPostByCategorySum
 			FROM
 				`SBE_POS` A
 				INNER JOIN `SBE_CTG` B ON A.`SBE_CTG_SEQ` = B.`SBE_CTG_SEQ`
@@ -69,7 +100,8 @@
 			FROM
 				`SBE_POS`
 			WHERE
-				`SBE_POS_SEQ` = #{postSeq},
+				`SBE_POS_SEQ` = #{postSeq}
+				AND
 				`SBE_POS_REG_USR_ID` = #{userId}
 		]]>
 	</select>

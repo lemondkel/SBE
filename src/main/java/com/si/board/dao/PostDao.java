@@ -44,6 +44,18 @@ public class PostDao {
 	}
 
 	/**
+	 * 해당 게시판에 있는 게시물 총합을 가져옵니다.
+	 *
+	 * @param map
+	 * @return
+	 * @author l2jong
+	 * @since 2018-11-11
+	 */
+	public int getPostByBoardSum(int boardSeq) {
+		return session.selectOne("PostMapper.getPostByBoardSum", boardSeq);
+	}
+
+	/**
 	 * 해당 카테고리에 있는 게시물들을 가져옵니다.
 	 *
 	 * @param map
@@ -113,5 +125,9 @@ public class PostDao {
 	 */
 	public PostVo getPostDetail(int postSeq) {
 		return session.selectOne("PostMapper.getPostDetail", postSeq);
+	}
+
+	public int getPostByCategorySum(int categorySeq) {
+		return session.selectOne("PostMapper.getPostByCategorySum", categorySeq);
 	}
 }

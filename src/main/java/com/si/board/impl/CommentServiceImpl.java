@@ -36,4 +36,23 @@ public class CommentServiceImpl implements CommentService {
 
 		return commentDao.getCommentByPost(map);
 	}
+
+	@Override
+	public boolean isExistComment(int commentSeq) {
+		return commentDao.isExistComment(commentSeq);
+	}
+
+	@Override
+	public boolean isCorrectlyWriter(int commentSeq, String userId) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("commentSeq", commentSeq);
+		map.put("userId", userId);
+
+		return commentDao.isCorrectlyWriter(map);
+	}
+
+	@Override
+	public int deleteComment(int commentSeq) {
+		return commentDao.deleteComment(commentSeq);
+	}
 }

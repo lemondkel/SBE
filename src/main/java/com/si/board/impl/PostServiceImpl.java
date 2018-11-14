@@ -18,11 +18,23 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public List<PostVo> getPostByBoard(int boardSeq, int page) {
+		page = (page - 1) * 10;
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("boardSeq", boardSeq);
 		map.put("page", page);
 
 		return postDao.getPostByBoard(map);
+	}
+
+	@Override
+	public int getPostByBoardSum(int boardSeq) {
+		return postDao.getPostByBoardSum(boardSeq);
+	}
+
+	@Override
+	public int getPostByCategorySum(int categorySeq) {
+		return postDao.getPostByCategorySum(categorySeq);
 	}
 
 	@Override
@@ -32,6 +44,8 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public List<PostVo> getPostByCategory(int categorySeq, int page) {
+		page = (page - 1) * 10;
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("categorySeq", categorySeq);
 		map.put("page", page);

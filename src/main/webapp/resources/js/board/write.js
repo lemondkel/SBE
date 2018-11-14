@@ -17,7 +17,7 @@ function writePost() {
 	};
 
 	var request = new XMLHttpRequest();
-	request.open('PUT', getContextPath() + '/board/process/write', true);
+	request.open('PUT', getContextPath() + '/post/process/write', true);
 	request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 
 	request.onload = function() {

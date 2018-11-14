@@ -65,13 +65,16 @@ public class BoardController {
 
 		List<CategoryVo> categoryList = categoryService.getAllCategoryByBoard(boardSeq);
 		List<PostVo> postList;
+		int postSum;
 
 		if (categorySeq == 0) {
 			// 전체일 경우
 			postList = postService.getPostByBoard(boardSeq, page);
+			postSum = postService.getPostByBoardSum(boardSeq);
 		} else {
 			// 전체가 아닐 경우
 			postList = postService.getPostByCategory(categorySeq, page);
+			postSum = postService.getPostByCategorySum(categorySeq);
 		}
 
 		if (page != 1 && postList == null) {
@@ -83,6 +86,7 @@ public class BoardController {
 		model.addAttribute("boardSeq", boardSeq);
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("postList", postList);
+		model.addAttribute("postSum", postSum);
 		return "board/list";
 	}
 

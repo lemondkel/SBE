@@ -111,6 +111,8 @@ public class UserController {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			session.removeAttribute("login_user_id");
+			session.removeAttribute("login_user_name");
+			session.removeAttribute("boardList");
 			resultMap.put("desc", "로그아웃에 성공하였습니다.");
 			resultMap.put("code", 200);
 			resultMap.put("result", true);

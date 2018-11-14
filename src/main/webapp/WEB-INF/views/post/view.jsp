@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%><%@ taglib
+	prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page session="true"%>
 
 <input type='hidden' value="${postSeq}" id="postSeq" />
@@ -12,11 +13,7 @@
 	<p>작성자: ${postDetail.postRegUserId}</p>
 	<p>작성일자: ${postDetail.postRegDate}</p>
 
-	<label for="postContents">
-		<textarea id="postContents" readonly>
-			${postDetail.postContents}
-		</textarea>
-	</label>
+	<pre id="postContents">${postDetail.postContents}</pre>
 </div>
 
 <div class="button-area">
@@ -42,11 +39,15 @@
 				</div>
 				<div>
 					<button type='button'>댓글수정</button>
-					<button type='button'>댓글삭제</button>
+					<button type='button' class="comment-delete-button"
+						onclick="deleteComment(this)">댓글삭제</button>
 				</div>
 			</li>
 		</c:forEach>
 	</ul>
-	
-	<button id="viewMoreBt" type="button" onclick="viewMore()">더 보기</button>
+
+	<c:if test="${fn:length(commentList) == 3}">
+		<button id="viewMoreBt" type="button" style="margin: 0 10px;"
+			onclick="viewMore()">더 보기</button>
+	</c:if>
 </div>

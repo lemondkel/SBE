@@ -20,4 +20,8 @@ public interface PostService {
 	boolean isExistPost(int postSeq);
 
 	PostVo getPostDetail(int postSeq);
+
+	int getPostByBoardSum(int boardSeq);
+
+	int getPostByCategorySum(int categorySeq);
 }

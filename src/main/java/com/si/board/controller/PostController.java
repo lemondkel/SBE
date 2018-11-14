@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.si.board.service.BoardService;
@@ -179,37 +178,47 @@ public class PostController {
 	 * @since 2018-11-11
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/process/delete", method = RequestMethod.DELETE)
-	public Map<String, Object> deletePostProcess(@RequestParam("post_seq") int postSeq, HttpSession session) {
+	@RequestMapping(value = "/process/delete/{post_seq}", method = RequestMethod.DELETE)
+	public Map<String, Object> deletePostProcess(@PathVariable("post_seq") int postSeq, HttpSession session) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-
 		String loginUserId;
-		try {
-			loginUserId = session.getAttribute("login_user_id").toString();
-		} catch (Exception e) {
-			resultMap.put("desc", "로그인이 필요합니다.");
-			resultMap.put("code", 900);
-			resultMap.put("result", false);
-			return resultMap;
-		}
 
 		try {
-			// 세션에 있는 사용자가 해당 게시물을 남긴 사용자인지 검증합니다.
-			if (postService.isCorrectlyWriter(postSeq, loginUserId)) {
-				// 일치할 경우
-				if (postService.deletePost(postSeq) == 1) {
-					resultMap.put("desc", "게시물 삭제에 성공하였습니다.");
-					resultMap.put("code", 200);
-					resultMap.put("result", true);
+			// 게시물이 존재하는지 확인합니다.
+			if (postService.isExistPost(postSeq)) {
+				try {
+					// 세션에 아이디가 존재하는지 확인합니다.
+					loginUserId = session.getAttribute("login_user_id").toString();
+				} catch (Exception e) {
+					resultMap.put("desc", "로그인이 필요합니다.");
+					resultMap.put("code", 900);
+					resultMap.put("result", false);
+					return resultMap;
+				}
+
+				// 세션에 있는 사용자가 해당 게시물을 남긴 사용자와 같은지 비교합니다.
+				if (postService.isCorrectlyWriter(postSeq, loginUserId)) {
+					// 일치할 경우
+					if (postService.deletePost(postSeq) == 1) {
+						resultMap.put("desc", "게시물 삭제에 성공하였습니다.");
+						resultMap.put("code", 200);
+						resultMap.put("result", true);
+					} else {
+						// 삭제가 정상적으로 이루어지지 않았을 경우
+						resultMap.put("desc", "게시물 삭제에 실패하였습니다.");
+						resultMap.put("code", 600);
+						resultMap.put("result", false);
+					}
 				} else {
-					resultMap.put("desc", "게시물 삭제에 실패하였습니다.");
-					resultMap.put("code", 600);
+					// 게시물을 남긴 사용자와 세션에 남아 있는 사용자와 다를 경우
+					resultMap.put("desc", "올바른 사용자가 아닙니다.");
+					resultMap.put("code", 700);
 					resultMap.put("result", false);
 				}
 			} else {
-				// 게시물을 남긴 사용자와 세션에 남아 있는 사용자와 다를 경우
-				resultMap.put("desc", "올바른 사용자가 아닙니다.");
-				resultMap.put("code", 700);
+				// 게시물이 존재하지 않을 경우
+				resultMap.put("desc", "게시물이 존재하지 않습니다.");
+				resultMap.put("code", 800);
 				resultMap.put("result", false);
 			}
 		} catch (Exception e) {

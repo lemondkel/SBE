@@ -1,0 +1,20 @@
+.comment-area {
+	padding-bottom: 30px;
+}
+
+ul.comment-list li {
+	border: 1px solid #CCC;
+	margin: 10px 0;
+	list-style-type: none;
+	padding: 10px;
+}
+
+ul.comment-list {
+	margin: 0 10px;
+	padding: 0;
+}
+
+ul.comment-list li p {
+	margin: 0;
+	line-height: 30px;
+}

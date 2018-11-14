@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.si.board.service.CommentService;
-import com.si.board.service.PostService;
 import com.si.board.vo.CommentVo;
 
 /**
@@ -31,12 +29,9 @@ public class CommentController {
 
 	private final CommentService commentService;
 
-	private final PostService postService;
-
 	@Autowired
-	public CommentController(CommentService commentService, PostService postService) {
+	public CommentController(CommentService commentService) {
 		this.commentService = commentService;
-		this.postService = postService;
 	}
 
 	/**
@@ -72,6 +67,7 @@ public class CommentController {
 				resultMap.put("code", 200);
 				resultMap.put("result", true);
 				resultMap.put("username", session.getAttribute("login_user_name").toString());
+				resultMap.put("commentSeq", commentVo.getCommentSeq());
 			} else {
 				resultMap.put("desc", "댓글 작성에 실패하였습니다.");
 				resultMap.put("code", 600);
@@ -93,7 +89,8 @@ public class CommentController {
 	/**
 	 * 댓글을 가져옵니다.
 	 *
-	 * @param session 세션
+	 * @param session
+	 *            세션
 	 * @return Map
 	 * @author l2jong
 	 * @since 2018-11-14
@@ -138,48 +135,58 @@ public class CommentController {
 	}
 
 	/**
-	 * 게시물 삭제 비즈니스 로직
+	 * 댓글 삭제 비즈니스 로직
 	 *
-	 * @param postSeq
-	 *            게시물 번호
+	 * @param commentSeq
+	 *            댓글 번호
 	 * @param session
 	 *            세션
 	 * @return Map
 	 * @author l2jong
-	 * @since 2018-11-11
+	 * @since 2018-11-14
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/process/delete", method = RequestMethod.DELETE)
-	public Map<String, Object> deletePostProcess(@RequestParam("post_seq") int postSeq, HttpSession session) {
+	@RequestMapping(value = "/process/delete/{comment_seq}", method = RequestMethod.DELETE)
+	public Map<String, Object> deletePostProcess(@PathVariable("comment_seq") int commentSeq, HttpSession session) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-
 		String loginUserId;
-		try {
-			loginUserId = session.getAttribute("login_user_id").toString();
-		} catch (Exception e) {
-			resultMap.put("desc", "로그인이 필요합니다.");
-			resultMap.put("code", 900);
-			resultMap.put("result", false);
-			return resultMap;
-		}
 
 		try {
-			// 세션에 있는 사용자가 해당 게시물을 남긴 사용자인지 검증합니다.
-			if (postService.isCorrectlyWriter(postSeq, loginUserId)) {
-				// 일치할 경우
-				if (postService.deletePost(postSeq) == 1) {
-					resultMap.put("desc", "게시물 삭제에 성공하였습니다.");
-					resultMap.put("code", 200);
-					resultMap.put("result", true);
+			// 게시물이 존재하는지 확인합니다.
+			if (commentService.isExistComment(commentSeq)) {
+				try {
+					// 세션에 아이디가 존재하는지 확인합니다.
+					loginUserId = session.getAttribute("login_user_id").toString();
+				} catch (Exception e) {
+					resultMap.put("desc", "로그인이 필요합니다.");
+					resultMap.put("code", 900);
+					resultMap.put("result", false);
+					return resultMap;
+				}
+
+				// 세션에 있는 사용자가 해당 게시물을 남긴 사용자와 같은지 비교합니다.
+				if (commentService.isCorrectlyWriter(commentSeq, loginUserId)) {
+					// 일치할 경우
+					if (commentService.deleteComment(commentSeq) == 1) {
+						resultMap.put("desc", "댓글 삭제에 성공하였습니다.");
+						resultMap.put("code", 200);
+						resultMap.put("result", true);
+					} else {
+						// 삭제가 정상적으로 이루어지지 않았을 경우
+						resultMap.put("desc", "댓글 삭제에 실패하였습니다.");
+						resultMap.put("code", 600);
+						resultMap.put("result", false);
+					}
 				} else {
-					resultMap.put("desc", "게시물 삭제에 실패하였습니다.");
-					resultMap.put("code", 600);
+					// 게시물을 남긴 사용자와 세션에 남아 있는 사용자와 다를 경우
+					resultMap.put("desc", "올바른 사용자가 아닙니다.");
+					resultMap.put("code", 700);
 					resultMap.put("result", false);
 				}
 			} else {
-				// 게시물을 남긴 사용자와 세션에 남아 있는 사용자와 다를 경우
-				resultMap.put("desc", "올바른 사용자가 아닙니다.");
-				resultMap.put("code", 700);
+				// 게시물이 존재하지 않을 경우
+				resultMap.put("desc", "댓글이 존재하지 않습니다.");
+				resultMap.put("code", 800);
 				resultMap.put("result", false);
 			}
 		} catch (Exception e) {

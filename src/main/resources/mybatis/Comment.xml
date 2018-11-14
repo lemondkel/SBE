@@ -17,6 +17,11 @@
 				#{commentRegUsrId}
 			)
 		]]>
+		<selectKey resultType="int" order="AFTER" keyProperty="commentSeq">
+			<![CDATA[
+				SELECT LAST_INSERT_ID()
+			]]>
+		</selectKey>
 	</insert>
 	
 	<select id="getCommentByPost" resultType="Comment" parameterType="map">
@@ -34,4 +39,37 @@
 			LIMIT #{page}, 3
 		]]>
 	</select>
+
+	<select id="isCorrectlyWriter" parameterType="map" resultType="boolean">
+		<![CDATA[
+			SELECT
+				IF(COUNT(*)=1, true, false) AS isCorrectlyWriter
+			FROM
+				`SBE_CMT`
+			WHERE
+				`SBE_CMT_SEQ` = #{commentSeq}
+				AND
+				`SBE_CMT_REG_USR_ID` = #{userId}
+		]]>
+	</select>
+
+	<select id="isExistComment" resultType="boolean" parameterType="int">
+		<![CDATA[
+			SELECT
+				IF(COUNT(*)=1, true, false) AS isExistComment
+			FROM
+				`SBE_CMT`
+			WHERE
+				`SBE_CMT_SEQ` = #{commentSeq}
+		]]>
+	</select>
+
+	<delete id="deleteComment" parameterType="int">
+		<![CDATA[
+			DELETE FROM
+				`SBE_CMT`
+			WHERE
+				`SBE_CMT_SEQ` = #{commentSeq}
+		]]>
+	</delete>
 </mapper>

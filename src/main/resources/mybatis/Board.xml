@@ -8,6 +8,7 @@
 				`SBE_BOD_SEQ` AS boardSeq, `SBE_BOD_NAME` AS boardName, `SBE_BOD_ORDER` AS boardOrder
 			FROM
 				`SBE_BOD`
+			ORDER BY `SBE_BOD_SEQ` ASC
 		]]>
 	</select>
 	

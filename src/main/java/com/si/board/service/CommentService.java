@@ -8,4 +8,10 @@ public interface CommentService {
 	int writeComment(CommentVo commentVo);
 	
 	List<CommentVo> getCommentByPost(int postSeq, int page);
+
+	boolean isExistComment(int commentSeq);
+
+	boolean isCorrectlyWriter(int commentSeq, String loginUserId);
+
+	int deleteComment(int commentSeq);
 }

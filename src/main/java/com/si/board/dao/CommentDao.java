@@ -27,4 +27,16 @@ public class CommentDao {
 	public List<CommentVo> getCommentByPost(Map<String, Object> map) {
 		return session.selectList("CommentMapper.getCommentByPost", map);
 	}
+
+	public int deleteComment(int commentSeq) {
+		return session.delete("CommentMapper.deleteComment", commentSeq);
+	}
+
+	public boolean isCorrectlyWriter(Map<String, Object> map) {
+		return session.selectOne("CommentMapper.isCorrectlyWriter", map);
+	}
+
+	public boolean isExistComment(int commentSeq) {
+		return session.selectOne("CommentMapper.isExistComment", commentSeq);
+	}
 }
