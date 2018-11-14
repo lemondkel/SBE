@@ -8,7 +8,6 @@ documentReady(readyFunc);
  * @returns
  */
 function readyFunc() {
-
 	// 댓글 삭제 클릭 이벤트 리스너 부착.
 	addCommentDeleteListener();
 }
@@ -100,7 +99,6 @@ function writeComment() {
 				html += '<p>내용: ' + commentText.value + '</p>';
 				html += '</div>';
 				html += '<div>';
-				html += '<button type="button">댓글수정</button>&nbsp;';
 				html += '<button type="button" class="comment-delete-button" onclick="deleteComment(this)">댓글삭제</button>';
 				html += '</div>';
 				html += '</li>';
@@ -152,10 +150,12 @@ function viewMore() {
 					html += '<p>작성자: ' + dataList[i].commentRegUsrName + '</p>';
 					html += '<p>내용: ' + dataList[i].commentContents + '</p>';
 					html += '</div>';
-					html += '<div>';
-					html += '<button type="button">댓글수정</button>&nbsp;';
-					html += '<button type="button" class="comment-delete-button" onclick="deleteComment(this)">댓글삭제</button>';
-					html += '</div>';
+					
+					if (dataList[i].commentRegUsrId === data.loginUserId) {
+						html += '<div>';
+						html += '<button type="button" class="comment-delete-button" onclick="deleteComment(this)">댓글삭제</button>';
+						html += '</div>';
+					}
 					html += '</li>';
 
 					commentList.innerHTML += html;
@@ -216,4 +216,16 @@ function deletePost() {
 
 		request.send();
 	}
+}
+
+/**
+ * 게시물 수정 페이지로 이동합니다.
+ * 
+ * @author l2jong
+ * @since 2018-11-14
+ * @returns
+ */
+function goPostUpdatePage() {
+	var postSeq = document.getElementById('postSeq').value;
+	window.location.href = getContextPath() + '/post/edit/' + postSeq;
 }

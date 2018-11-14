@@ -17,8 +17,10 @@
 </div>
 
 <div class="button-area">
-	<button type='button' id="updatePostBt" onclick="updatePost()">글수정</button>
-	<button type='button' id="deletePostBt" onclick="deletePost()">글삭제</button>
+	<c:if test="${postDetail.postRegUserId == login_user_id}">
+		<button type='button' id="updatePostBt" onclick="goPostUpdatePage()">글수정</button>
+		<button type='button' id="deletePostBt" onclick="deletePost()">글삭제</button>
+	</c:if>
 	<button type='button' onclick="window.history.back()">뒤로가기</button>
 </div>
 
@@ -37,11 +39,12 @@
 					<p>작성자: ${item.commentRegUsrName}</p>
 					<p>내용: ${item.commentContents}</p>
 				</div>
-				<div>
-					<button type='button'>댓글수정</button>
-					<button type='button' class="comment-delete-button"
-						onclick="deleteComment(this)">댓글삭제</button>
-				</div>
+				<c:if test="${login_user_id == item.commentRegUsrId}">
+					<div>
+						<button type='button' class="comment-delete-button"
+							onclick="deleteComment(this)">댓글삭제</button>
+					</div>
+				</c:if>
 			</li>
 		</c:forEach>
 	</ul>

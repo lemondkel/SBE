@@ -133,7 +133,8 @@
 			SELECT
 				A.`SBE_POS_TITLE` AS postTitle, A.`SBE_POS_CONTENTS` AS postContents,
 				A.`SBE_POS_REG_USR_ID` AS postRegUserId, A.`SBE_POS_VIEW_COUNT` AS postViewCount,
-				DATE_FORMAT(A.`SBE_POS_REG_DATE`, '%Y-%m-%d') AS postRegDate, B.`SBE_CTG_NAME` AS postCategoryName
+				DATE_FORMAT(A.`SBE_POS_REG_DATE`, '%Y-%m-%d %H:%i') AS postRegDate, B.`SBE_CTG_NAME` AS postCategoryName,
+				B.`SBE_BOD_SEQ` AS boardSeq, B.`SBE_CTG_SEQ` AS categorySeq
 			FROM
 				`SBE_POS` A
 				INNER JOIN `SBE_CTG` B ON A.`SBE_CTG_SEQ` = B.`SBE_CTG_SEQ`

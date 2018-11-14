@@ -116,6 +116,7 @@ public class CommentController {
 				resultMap.put("code", 200);
 				resultMap.put("result", true);
 				resultMap.put("commentList", commentList);
+				resultMap.put("loginUserId", session.getAttribute("login_user_id").toString());
 			} else {
 				resultMap.put("desc", "더이상 댓글이 존재하지 않습니다.");
 				resultMap.put("code", 901);

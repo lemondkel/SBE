@@ -62,7 +62,7 @@ public class PostController {
 	 * @since 2018-11-08
 	 */
 	@RequestMapping(value = "/write/{boardSeq}", method = RequestMethod.GET)
-	public String boardWritePage(@PathVariable("boardSeq") int boardSeq, Model model, HttpSession session) {
+	public String postWritePage(@PathVariable("boardSeq") int boardSeq, Model model, HttpSession session) {
 
 		if (session.getAttribute("login_user_id") == null) {
 			// 세션이 존재하지 않을 경우
@@ -78,6 +78,47 @@ public class PostController {
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("boardSeq", boardSeq);
 		return "board/write";
+	}
+
+	/**
+	 * 게시물 수정 페이지입니다.
+	 *
+	 * @param boardSeq
+	 *            보드 시퀀스 번호
+	 * @param model
+	 *            모델
+	 * @return ModelAndView
+	 * @author l2jong
+	 * @since 2018-11-08
+	 */
+	@RequestMapping(value = "/edit/{postSeq}", method = RequestMethod.GET)
+	public String postEditPage(@PathVariable("postSeq") int postSeq, Model model, HttpSession session) {
+
+		String userId;
+		if (session.getAttribute("login_user_id") == null) {
+			// 세션이 존재하지 않을 경우
+			return "redirect:/";
+		} else {
+			userId = session.getAttribute("login_user_id").toString();
+
+			if (!postService.isExistPost(postSeq)) {
+				// 없는 게시물 경우
+				return "redirect:/";
+			} else {
+				if (postService.isCorrectlyWriter(postSeq, userId)) {
+
+					PostVo postDetail = postService.getPostDetail(postSeq);
+
+					List<CategoryVo> categoryList = categoryService.getAllCategoryByBoard(postDetail.getBoardSeq());
+					model.addAttribute("categoryList", categoryList);
+					model.addAttribute("postDetail", postDetail);
+					model.addAttribute("postSeq", postSeq);
+					return "board/write";
+				} else {
+					return "redirect:/";
+				}
+			}
+		}
 	}
 
 	/**
