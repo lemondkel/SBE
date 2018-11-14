@@ -39,7 +39,7 @@
 				<td>${item.postSeq}</td>
 				<td>${item.postCategoryName}</td>
 				<td>
-					<a href="${pageContext.request.contextPath}/board/view/${item.postSeq}">${item.postTitle}</a>
+					<a href="${pageContext.request.contextPath}/post/view/${item.postSeq}">${item.postTitle}</a>
 				</td>
 				<td>${item.postViewCount}</td>
 				<td>${item.postRegUserName}</td>

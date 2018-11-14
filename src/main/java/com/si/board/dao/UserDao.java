@@ -52,4 +52,8 @@ public class UserDao {
 	public boolean isExistUser(String userId) {
 		return session.selectOne("UserMapper.isExistUser", userId);
 	}
+
+	public String getUserName(String userId) {
+		return session.selectOne("UserMapper.getUserName", userId);
+	}
 }

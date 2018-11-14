@@ -26,16 +26,27 @@
 </div>
 
 <div class="comment-area">
-	<ul class="comment-list">
-		<li>
-			<div>
-				<p>작성자: 이두종</p>
-				<p>내용: ㅁ뉴ㅜ임누아ㅣㅁ누아ㅣㅁ누아ㅣ</p>
-			</div>
-			<div>
-				<button type='button'>댓글수정</button>
-				<button type='button'>댓글삭제</button>
-			</div>
-		</li>
+	<h2>댓글</h2>
+
+	<div class="comment-write-area">
+		<textarea id="commentText"></textarea>
+		<button type='button' onclick="writeComment()">작성하기</button>
+	</div>
+
+	<ul class="comment-list" id="commentList">
+		<c:forEach items="${commentList}" var="item">
+			<li data-comment-seq="${item.commentSeq}">
+				<div>
+					<p>작성자: ${item.commentRegUsrName}</p>
+					<p>내용: ${item.commentContents}</p>
+				</div>
+				<div>
+					<button type='button'>댓글수정</button>
+					<button type='button'>댓글삭제</button>
+				</div>
+			</li>
+		</c:forEach>
 	</ul>
+	
+	<button id="viewMoreBt" type="button" onclick="viewMore()">더 보기</button>
 </div>

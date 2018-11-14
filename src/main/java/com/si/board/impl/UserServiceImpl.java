@@ -52,4 +52,9 @@ public class UserServiceImpl implements UserService {
 		return userDao.isExistUser(userId);
 	}
 
+	@Override
+	public String getUserName(String userId) {
+		return userDao.getUserName(userId);
+	}
+
 }

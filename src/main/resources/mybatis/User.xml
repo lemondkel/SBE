@@ -29,6 +29,18 @@
 		]]>
 	</select>
 
+	<select id="getUserName" resultType="string"
+		parameterType="string">
+		<![CDATA[
+			SELECT
+				`SBE_USR_NAME`
+			FROM
+				`SBE_USR`
+			WHERE
+				`SBE_USR_ID` = #{userId}
+		]]>
+	</select>
+
 	<select id="isExistUser" resultType="boolean"
 		parameterType="string">
 		<![CDATA[

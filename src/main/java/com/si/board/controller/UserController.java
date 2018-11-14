@@ -68,8 +68,10 @@ public class UserController {
 				// 아이디가 존재할 경우
 				if (bCryptPasswordEncoder.matches(userVo.getUserPassword(), encodedPassword)) {
 					// 비밀번호가 일치할 경우
-					session.setAttribute("login_user_id", userVo.getUserId());
 					List<BoardVo> boardList = boardService.getAllBoard();
+
+					session.setAttribute("login_user_id", userVo.getUserId());
+					session.setAttribute("login_user_name", userService.getUserName(userVo.getUserId()));
 					session.setAttribute("boardList", boardList);
 					resultMap.put("desc", "로그인에 성공하였습니다.");
 					resultMap.put("code", 200);

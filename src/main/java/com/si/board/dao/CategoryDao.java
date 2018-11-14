@@ -29,6 +29,4 @@ public class CategoryDao {
 	public List<CategoryVo> getAllCategoryByBoard(int boardSeq) {
 		return session.selectList("CategoryMapper.getAllCategoryByBoard", boardSeq);
 	}
-
-	;
 }

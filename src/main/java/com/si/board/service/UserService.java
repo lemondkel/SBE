@@ -33,4 +33,6 @@ public interface UserService {
 	 * @return
 	 */
 	boolean isExistUser(String userId);
+
+	String getUserName(String userId);
 }

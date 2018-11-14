@@ -2,12 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="CommentMapper">
-	<select id="getCommentByPost" resultType="Comment">
+	
+	<insert id="writeComment" parameterType="Comment">
+		<![CDATA[
+			INSERT INTO
+				`SBE_CMT`
+			(
+				`SBE_CMT_POS_SEQ`, `SBE_CMT_CONTENTS`,
+				`SBE_CMT_REG_USR_ID`
+			)
+			VALUES
+			(
+				#{postSeq}, #{commentContents},
+				#{commentRegUsrId}
+			)
+		]]>
+	</insert>
+	
+	<select id="getCommentByPost" resultType="Comment" parameterType="map">
 		<![CDATA[
 			SELECT
-				`SBE_BOD_SEQ` AS boardSeq, `SBE_BOD_NAME` AS boardName, `SBE_BOD_ORDER` AS boardOrder
+				`SBE_CMT_SEQ` AS commentSeq, `SBE_CMT_CONTENTS` AS commentContents,
+				`SBE_CMT_REG_USR_ID` AS commentRegUsrId, DATE_FORMAT(`SBE_CMT_REG_DATE`, '%Y-%m-%d %H:%i') AS commentRegDate,
+				B.`SBE_USR_NAME` AS commentRegUsrName
 			FROM
-				`SBE_BOD`
+				`SBE_CMT` A
+				INNER JOIN `SBE_USR` B ON A.`SBE_CMT_REG_USR_ID` = B.`SBE_USR_ID`
+			WHERE
+				`SBE_CMT_POS_SEQ` = #{postSeq}
+			ORDER BY `SBE_CMT_SEQ` DESC
+			LIMIT #{page}, 3
 		]]>
 	</select>
 </mapper>
