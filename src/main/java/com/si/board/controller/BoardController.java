@@ -84,6 +84,7 @@ public class BoardController {
 
 		model.addAttribute("page", page);
 		model.addAttribute("boardSeq", boardSeq);
+		model.addAttribute("categorySeq", categorySeq);
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("postList", postList);
 		model.addAttribute("postSum", postSum);

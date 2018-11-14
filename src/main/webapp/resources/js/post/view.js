@@ -1,4 +1,4 @@
-documentReady(postViewReadyFunc);
+documentReady(readyFunc);
 
 /**
  * 화면이 정상적으로 로딩됬을 때 동작하는 함수
@@ -7,7 +7,7 @@ documentReady(postViewReadyFunc);
  * @since 2018-11-14
  * @returns
  */
-function postViewReadyFunc() {
+function readyFunc() {
 
 	// 댓글 삭제 클릭 이벤트 리스너 부착.
 	addCommentDeleteListener();
