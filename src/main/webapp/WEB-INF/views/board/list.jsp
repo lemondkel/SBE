@@ -9,7 +9,7 @@
 <input type='hidden' value="${page}" id="currentPage" />
 
 <div>
-	<h2>게시판</h2>
+	<h2>게시판: ${boardName}</h2>
 
 	<h3>카테고리</h3>
 	<ul>

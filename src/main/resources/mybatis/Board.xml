@@ -22,4 +22,15 @@
 				`SBE_BOD_SEQ` = #{boardSeq}
 		]]>
 	</select>
+	
+	<select id="getBoardName" resultType="string" parameterType="int">
+		<![CDATA[
+			SELECT 
+				`SBE_BOD_NAME` AS boardName
+			FROM
+				`SBE_BOD`
+			WHERE
+				`SBE_BOD_SEQ` = #{boardSeq}
+		]]>
+	</select>
 </mapper>

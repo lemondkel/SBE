@@ -81,7 +81,10 @@ public class BoardController {
 			// 페이지가 1페이지가 아니고, 게시물이 없을 경우
 			return "redirect:/board/list/" + boardSeq + "/0/1";
 		}
+		
+		String boardName = boardService.getBoardName(boardSeq);
 
+		model.addAttribute("boardName", boardName);
 		model.addAttribute("page", page);
 		model.addAttribute("boardSeq", boardSeq);
 		model.addAttribute("categorySeq", categorySeq);

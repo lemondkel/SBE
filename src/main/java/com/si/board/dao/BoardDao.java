@@ -40,4 +40,8 @@ public class BoardDao {
 	public boolean isExistBoard(int boardSeq) {
 		return session.selectOne("BoardMapper.isExistBoard", boardSeq);
 	}
+
+	public String getBoardName(int boardSeq) {
+		return session.selectOne("BoardMapper.getBoardName", boardSeq);
+	}
 }

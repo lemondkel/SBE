@@ -39,4 +39,9 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.isExistBoard(boardSeq);
 	}
 
+	@Override
+	public String getBoardName(int boardSeq) {
+		return boardDao.getBoardName(boardSeq);
+	}
+
 }
